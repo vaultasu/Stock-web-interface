@@ -93,6 +93,7 @@
         }
 
         #MainFooter .Button {
+            box-sizing: border-box;
             margin: 0px 4px 0px 4px;
             overflow: hidden;
             display: flex;
@@ -135,7 +136,7 @@
             <svg class="image" viewBox='0 0 512 512'>
                 <use xlink:href='icon_load.svg#icon' />
             </svg>
-            Обновить
+            <span>Обновить<span>
         </button>
 
 
@@ -144,7 +145,7 @@
             <svg class="image" viewBox='0 0 18 18'>
                 <use xlink:href='icon_save.svg#icon' />
             </svg>
-            Сохранить
+            <span>Сохранить</span>
         </button>
     </div>
 
@@ -178,6 +179,7 @@
             } else {
                 $("#MainFooter").attr('class', 'FooterMin');
             }
+            $('.Button').textfill(64);
         }
 
         String.prototype.decode_CER_first_pass = function () {
@@ -381,6 +383,29 @@
         function SaveFile() {
             save_xsls();
         }
+
+        (function ($) {
+            $.fn.textfill = function (maxFontSize) {
+                maxFontSize = parseInt(maxFontSize, 10);
+                return this.each(function () {
+                    var ourText = $("span", this),
+                        parent = ourText.parent(),
+                        maxHeight = parent.height(),
+                        maxWidth = parent.width(),
+                        fontSize = parseInt(ourText.css("fontSize"), 10),
+                        multiplier = maxWidth / ourText.width()<maxHeight / ourText.height()? maxWidth / ourText.width():maxHeight / ourText.height(),
+                        newSize = (fontSize * (multiplier - 0.1));
+                    ourText.css(
+                        "fontSize",
+                        (maxFontSize > 0 && newSize > maxFontSize) ?
+                        maxFontSize :
+                        newSize
+                    );
+                });
+            };
+        })(jQuery);
+
+
     </script>
 </body>
 
