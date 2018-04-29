@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>!DOCTYPE</title>
+    <meta charset="utf-8">
+    <script src="jquery-3.3.1.min.js"></script>
+    <script src="xlsx.core.min.js"></script>
+    <script src="download.js"></script>
+    <style>
+        @font-face {
+            font-family: KTP900RUS;
+            src: url('KTP900RUS.ttf');
+        }
+
+
+        html {
+            padding: 0;
+            margin: 0;
+            width: 100%;
+            height: 100%;
+            font-family: KTP900RUS;
+            overflow: hidden;
+        }
+
+        body {
+            padding: 0;
+            margin: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        #StockView {
+            font-size: 16px;
+            border: 0px;
+        }
+
+        .row {
+            display: flex;
+            padding: 0;
+            margin-top: 2px;
+            margin-bottom: 8px;
+        }
+
+        .cell {
+            background: rgb(231, 231, 231);
+            color: rgb(0, 65, 255);
+            border: 2px solid rgb(0, 65, 255);
+            white-space: nowrap;
+            padding-left: 2px;
+            margin: 0px 2px 0px 2px;
+        }
+
+        .row .cell {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            table-layout: fixed;
+        }
+
+        div.CellHead {
+            text-align: center;
+            font-weight: bold;
+            font-size: 20px;
+        }
+
+        div.wrapper {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            margin: 0;
+        }
+
+
+        #MainFooter {
+            min-height: 10%;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            flex-direction: row;
+            overflow: hidden;
+        }
+
+        .FooterFull {
+            background: rgb(231, 231, 231) url(image.svg) no-repeat center right;
+            background-size: contain;
+        }
+
+        .FooterMin {
+            background: rgb(231, 231, 231);
+        }
+
+        #MainFooter .Wrapper {
+            padding: 10px 5px 10px 5px;
+            overflow: hidden;
+        }
+
+
+        .FooterMin .Wrapper {
+            width: 50%;
+        }
+
+        #MainFooter .Button {
+            overflow: hidden;
+            display: flex;
+            flex-direction: row;
+            font-family: KTP900RUS;
+            font-size: 48px;
+            color: rgb(0, 65, 255);
+            border: 2px solid rgb(0, 65, 255);
+            padding: 5px;
+            background: rgb(231, 231, 231);
+            border-radius: 10px;
+            align-items: center;
+            cursor: pointer;
+            height: 100%;
+            justify-content:center;
+        }
+
+        .FooterMin .Button {
+            width: 100%;
+        }
+
+        .ButtonLabel {
+            padding-left: 10px;
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body style="display: flex;flex-direction: column">
+
+    <div id="StockView" style="width:100%;height:90%;background: rgb(231, 231,231);overflow: scroll;padding: 0;margin: 0">
+
+    </div>
+
+    <div id="MainFooter" class='FooterFull'>
+        <div class='Wrapper'>
+            <button class='Button' onclick="UpdateStock()">
+                <svg viewBox='0 0 512 512' display="block" width="45px" margin-right="10px">
+                    <use xlink:href='icon_load.svg#icon' />
+                </svg>
+                <div class='ButtonLabel'>Обновить</div>
+            </button>
+        </div>
+        <div class='Wrapper'>
+            <button class='Button' onclick="SaveFile()">
+                <svg viewBox='0 0 18 18' display="block" width="40px" margin-right="10px">
+                    <use xlink:href='icon_save.svg#icon' />
+                </svg>
+                <div class='ButtonLabel'>Сохранить</div>
+            </button>
+        </div>
+
+        <svg width="0px" height="0">
+            <symbol id="Box">
+                <path fill="#0041ff" d="M443.215,199.258l-64-37.6l64-37.6c3.2-1.6,4-5.2,2.4-8c-0.4-0.8-1.2-1.6-2-2l-72.4-42.4l-72.8-42.8c-2-1.2-4-1.2-6,0
+                        l-69.2,40.8l-69.6-40.8c-1.6-1.2-4-1.2-6,0l-72.4,42.8l-72,42.4c-0.8,0.4-1.6,1.2-2,2c-1.6,2.8-0.8,6.4,2,8l64,37.6l-64.4,37.6
+                        c-2.8,1.6-3.6,5.2-2,8c0.4,0.8,1.2,1.6,2,2l69.6,40.8v79.2c0,2,1.2,4,2.8,4.8l144,83.2c0.4,0,0.4,0.4,0.8,0.4c0,0,0.4,0,0.4,0.4
+                        c0.8,0.4,1.2,0.4,2,0.4s1.2,0,2-0.4c0,0,0.4,0,0.4-0.4c0.4,0,0.4,0,0.8-0.4l143.6-83.2c2-1.2,2.8-3.2,2.8-4.8v-78.4l71.2-41.6
+                        c0.8-0.4,1.6-1.2,2-2C446.816,204.458,446.015,200.858,443.215,199.258z M295.616,40.458l69.6,40.8l64,37.6l-61.2,36l-69.6-40.8
+                        l-64-37.6L295.616,40.458z M229.215,86.458l63.6,37.6l64,37.6l-64,37.6l-20.4,12l-43.2-25.2V86.458z M17.215,118.858l64-37.6
+                        l69.6-40.8l61.2,36l-64,37.6l-69.6,40.8L17.215,118.858z M217.215,86.458v99.6l-43.2,25.2l-20.4-12l-64-37.6l64-37.6
+                        L217.215,86.458z M81.215,241.658l-64-37.6l61.2-36l69.6,40.8l64,37.6l-61.2,36l-69.2-40.4L81.215,241.658z M216.415,402.858
+                        l-132.4-76.8v-69.2l63.6,37.6c2,1.2,4,1.2,6,0l62.8-36.8V402.858z M223.215,240.058l-37.6-22l37.6-22l37.6,22L223.215,240.058z
+                         M360.816,326.058l-132.4,76.8v-146.8l64.4,38c1.6,1.2,4,1.2,6,0l62-36.4V326.058z M365.215,241.658l-2,1.2l-67.6,39.6l-61.2-36
+                        l64-37.6l69.6-40.8l61.2,36L365.215,241.658z" />
+            </symbol>
+            <symbol id='Loading'>
+            </symbol>
+        </svg>
+    </div>
+
+
+    <script type='text/javascript'>
+        window.addEventListener('resize', OnResize, true);
+
+        function OnResize() {
+            var w = jQuery(window).width();
+            var h = jQuery(window).height();
+            if (w > h) {
+                $("#MainFooter").attr('class', 'FooterFull');
+            } else {
+                $("#MainFooter").attr('class', 'FooterMin');
+            }
+        }
+
+        String.prototype.decode_CER_first_pass = function () {
+            return this
+                .replace(/&#x([\da-f]{2,4});/gi,
+                    function ($0, $1) {
+                        return String.fromCharCode("0x" + $1)
+                    });
+        }
+
+        String.prototype.decode_CER_second_pass = function () {
+            return this
+                .replace(/&#x([\da-f]{2,4});/gi,
+                    function ($0, $1) {
+                        var hex = parseInt($1, 16);
+                        if (hex > 191 && hex < 256) {
+                            return String.fromCharCode(1040 + hex - 192);
+                        } else {
+                            return String.fromCharCode("0x" + $1)
+                        }
+                    });
+        }
+
+        String.prototype.decode_CER = function () {
+            return this.decode_CER_first_pass().decode_CER_second_pass().slice(1, -1);
+        }
+
+        var json;
+
+        $(document).ready(function () {
+            $.ajaxSetup({
+                cache: false
+            });
+
+            UpdateStock();
+        });
+
+        async function parallel() {
+            const task = new Array(10);
+            const json = new Array(10);
+            for (var i = 0; i < 10; i++) {
+                console.log('Start task ' + i.toString());
+                task[i] = $.getJSON("Stock_" + i.toString() + ".htm", function (json) {
+                    console.log('Task done');
+                });
+            }
+            for (var i = 0; i < 10; i++) {
+                json[i] = await task[i];
+            }
+            return json;
+        }
+
+        async function UpdateStock() {
+            let startTime = performance.now();
+            $('#StockView').html(
+                '<div style=\'width:100%;height:100%;background: url(image.svg) no-repeat center;background-size: contain;\'><svg viewBox=\'0 0 64 64\' style=\'display:block;width:100%;height:100%;\'><use xlink:href=\'#Loading\'/></svg></div>'
+            );
+            json = await parallel();
+            console.log(`Load tags finished in ${ Number.parseInt(performance.now() - startTime) } miliseconds with`);
+            startTime = performance.now();
+            var tbl = document.createElement('div');
+            var xmax = 0;
+            var ymax = 0;
+            $('#StockView').html(
+                '<div id=\'MeasureCell\' class=\'cell\' style=\'display: inline-block;overflow: hidden;padding: 2px;\'></div>'
+            );
+            var msr = document.getElementById('MeasureCell');
+            for (var i = 0; i < 10; i++) {
+                var tr = document.createElement('div');
+                for (var j = 0; j < 10; j++) {
+                    var td = document.createElement('div');
+                    td.className = 'cell';
+                    td.setAttribute('index', i.toString() + " - " + j.toString());
+                    var value = "";
+                    var item = json[i].items[j];
+                    if (item.Busy == 1) {
+                        value = "<div class=\"CellHead\">" + i.toString() + " - " + j.toString() + "</div>";
+                        value += "Дата поставки: " + item.Date.decode_CER() + "<br>";
+                        value += "Тип двигателя: " + item.EngineType.decode_CER() + "<br>";
+                        value += "Номер двигателя: " + item.EngineNumber.decode_CER() + "<br>";
+                        value += "Шифр детали: " + item.EngineCode.decode_CER() + "<br>";
+                        value += "Наименование детали: " + item.Name.decode_CER() + "<br>";
+                        value += "Количество: " + item.Amount.decode_CER();
+                    } else {
+                        value = 'empty'
+                    };
+                    msr.innerHTML = value;
+                    var width = msr.clientWidth;
+                    var height = msr.clientHeight;
+                    xmax = xmax < width ? width : xmax;
+                    ymax = ymax < height ? height : ymax;
+                    td.innerHTML = value;
+                    tr.appendChild(td);
+                }
+                tbl.appendChild(tr);
+            }
+
+            xmax += 8;
+            $("#StockView").html(tbl.innerHTML);
+
+
+            var $rows = $('#StockView').children();
+
+            var width = document.body.clientWidth;
+
+            xmax *= 10;
+            width = xmax < width ? width : xmax;
+            $rows.each(function () {
+                $(this).attr('class', 'row');
+                $(this).width(width);
+                $(this).height(ymax);
+            });
+
+            $rows.each(function () {
+                var $cells = $(this).find('.cell');
+                $cells.each(function () {
+                    if ($(this).text() == 'empty') {
+                        $(this).html("<div class='wrapper'>" + "<div class=\"CellHead\">" + $(this).attr(
+                                'index') +
+                            "</div><svg viewBox='0 0 447 447' display='block'><use xlink:href=\"#Box\"/></svg></div>"
+                        );
+                    }
+                });
+            });
+
+            console.log(`Proccessing finished in ${ Number.parseInt(performance.now() - startTime) } miliseconds with`);
+        }
+
+        function s2ab(s) {
+            var buf = new ArrayBuffer(s.length);
+            var view = new Uint8Array(buf);
+            for (var i = 0; i < s.length; i++) {
+                view[i] = s.charCodeAt(i) & 0xFF;
+            }
+
+            return buf;
+
+        }
+
+        function save_xsls() {
+
+            var currentTime = new Date(),
+                month = (currentTime.getMonth() + 1).toString(),
+                day = currentTime.getDate().toString(),
+                year = currentTime.getFullYear().toString();
+
+            if (month.length < 2) month = '0' + month;
+            if (day.length < 2) day = '0' + day;
+
+            var wb = XLSX.utils.book_new();
+            wb.Props = {
+                Title: "Склад",
+                Subject: "",
+                Author: "",
+                CreatedDate: currentTime
+            };
+
+            var name = 'Склад ' + day + '.' + month + "." + year;
+
+            wb.SheetNames.push(name);
+
+            var ws_data = [];
+            ws_data.push(['Ячейка', 'Занята', 'Дата поставки', 'Тип двигателя', 'Номер двигателя', 'Шифр детали',
+                'Наименование детали', 'Количество'
+            ]);
+
+            for (var i = 0; i < 10; i++) {
+                for (var j = 0; j < 10; j++) {
+                    ws_data[i * 10 + j + 1] = [];
+                    var cell = ws_data[i * 10 + j + 1];
+                    var item = json[i].items[j];
+                    cell[0] = i.toString() + " - " + j.toString();
+                    if (item.Busy == 1) {
+                        cell[1] = 'Занята';
+                    } else {
+                        cell[1] = 'Пуста';
+                    }
+                    cell[2] = item.Date.decode_CER();
+                    cell[3] = item.EngineType.decode_CER();
+                    cell[4] = item.EngineNumber.decode_CER();
+                    cell[5] = item.EngineCode.decode_CER();
+                    cell[6] = item.Name.decode_CER();
+                    cell[7] = item.Amount.decode_CER();
+                }
+            }
+
+            var ws = XLSX.utils.aoa_to_sheet(ws_data);
+            wb.Sheets[name] = ws;
+            var wbout = XLSX.write(wb, {
+                bookType: 'xlsx',
+                type: 'binary'
+            });
+
+            download(new Blob([s2ab(wbout)]), 'test.xlsx', 'application/octet-stream');
+
+        }
+
+        function SaveFile() {
+            save_xsls();
+        }
+    </script>
+</body>
+
+</html>
