@@ -281,15 +281,17 @@
             }
 
             xmax += 8;
+            ymax += 8;
             $("#StockView").html(tbl.innerHTML);
 
 
             var $rows = $('#StockView').children();
-
             var width = document.body.clientWidth;
+            var height = document.body.clientHeight;
 
             xmax *= 10;
             width = xmax < width ? width : xmax;
+            height = ymax*10 < height ? height/10 : ymax;
             $rows.each(function () {
                 $(this).attr('class', 'row');
                 $(this).width(width);
