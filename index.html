@@ -107,6 +107,7 @@
             cursor: pointer;
             height: 100%;
             justify-content: center;
+            border-radius: 10px;
         }
 
     </style>
@@ -249,7 +250,7 @@
 
         function OnPostResize() {
             $('.Button span').css("fontsize", '48px');
-            $('.Button').textfill(144);
+            $('.Button').textfill(96);
             var width = $('#MainFooter').width() - 8;
             $('.Button').each(function () {
                 width -= $(this).width() + 8;
