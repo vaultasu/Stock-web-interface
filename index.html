@@ -83,13 +83,8 @@
             background: rgb(231, 231, 231);
         }
 
-        .FooterFull {
-            height: 10%;
-        }
 
-        .FooterMinX {
-            height: 10%;
-        }
+
 
         #FooterLogo {
             background: rgb(231, 231, 231) url(image.svg) no-repeat center right;
@@ -113,11 +108,6 @@
             cursor: pointer;
             height: 100%;
             justify-content: center;
-
-        }
-
-        .FooterMinX .Button {
-            width: 100%;
         }
 
         #MainFooter .image {
@@ -125,7 +115,6 @@
             padding-right: 5px;
             height: 100%;
         }
-
     </style>
 </head>
 
@@ -253,23 +242,27 @@
             var h = jQuery(window).height();
             if (w > h) {
                 if (w / 2 > h) {
-                    $("#MainFooter").attr('class', '');
+
                     $("#MainFooter").height(w / h * 10 + '%');
                     $("#FooterLogo").show();
+                    $('.Button').width($("#MainFooter").width() / 3);
                 } else {
-                    $("#MainFooter").attr('class', 'FooterFull');
+
                     $("#MainFooter").height('10%');
                     $("#FooterLogo").show();
+                    $('.Button').width($("#MainFooter").width() / 3);
                 }
 
             } else {
-                $("#MainFooter").attr('class', 'FooterMinX');
+
                 $("#MainFooter").height('10%');
                 $("#FooterLogo").hide();
+                $('.Button').width($("#MainFooter").width() / 2);
             }
         }
 
         function OnPostResize() {
+            $('.Button span').css("fontsize", '72px');
             $('.Button').textfill(72);
             var width = $('#MainFooter').width() - 8;
             $('.Button').each(function () {
@@ -503,8 +496,8 @@
                         maxHeight = parent.height(),
                         maxWidth = parent.width(),
                         fontSize = parseInt(ourText.css("fontSize"), 10),
-                        multiplier = maxWidth / (ourText.width()+ourIcon.width()) < maxHeight / (ourText.height()+ourIcon.height()) ?
-                        maxWidth / (ourText.width()+ourIcon.width()*0.65) : maxHeight / (ourText.height()+ourIcon.height()*0.65),
+                        multiplier = maxWidth / ourText.width() < maxHeight / ourText.height() ?
+                        maxWidth / ourText.width() : maxHeight / ourText.height(),
                         newSize = (fontSize * (multiplier - 0.1));
                     ourText.css(
                         "fontSize",
@@ -512,11 +505,11 @@
                         maxFontSize :
                         newSize
                     );
-                   ourIcon.css(
+                    ourIcon.css(
                         "height",
                         (maxFontSize > 0 && newSize > maxFontSize) ?
-                        maxFontSize * 0.65 :
-                        newSize * 0.65
+                        maxFontSize * 0.7 :
+                        newSize * 0.7
                     );
                 });
             };
