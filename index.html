@@ -80,20 +80,18 @@
             flex-direction: row;
             overflow: hidden;
             border: 2px solid rgb(0, 65, 255);
+            background: rgb(231, 231, 231);
         }
 
         .FooterFull {
-            background: rgb(231, 231, 231) url(image.svg) no-repeat center right;
-            background-size: contain;
             height: 10%;
         }
 
         .FooterMinX {
-            background: rgb(231, 231, 231);
             height: 10%;
         }
 
-        .FooterMinY {
+        #FooterLogo {
             background: rgb(231, 231, 231) url(image.svg) no-repeat center right;
             background-size: contain;
         }
@@ -105,7 +103,7 @@
             display: flex;
             flex-direction: row;
             font-family: KTP900RUS;
-            font-size: 48px;
+            font-size: 72px;
             color: rgb(0, 65, 255);
             border: 2px solid rgb(0, 65, 255);
             padding: 5px;
@@ -124,9 +122,10 @@
 
         #MainFooter .image {
             display: block;
-            height: 100%;
             padding-right: 5px;
+            height: 100%;
         }
+
     </style>
 </head>
 
@@ -142,8 +141,7 @@
             <svg class="image" viewBox='0 0 512 512'>
                 <use xlink:href='icon_load.svg#icon' />
             </svg>
-            <span>Обновить
-                <span>
+            <span>Обновить</span>
         </button>
 
 
@@ -154,6 +152,9 @@
             </svg>
             <span>Сохранить</span>
         </button>
+
+        <div id="FooterLogo"></div>
+
     </div>
 
     <svg width="0px" height="0">
@@ -251,25 +252,30 @@
             var w = jQuery(window).width();
             var h = jQuery(window).height();
             if (w > h) {
-                if(w/2>h)
-                {
-                    $("#MainFooter").attr('class', 'FooterMinY');
-                    $("#MainFooter").height(w/h*10+'%');
-                }
-                else
-                {
+                if (w / 2 > h) {
+                    $("#MainFooter").attr('class', '');
+                    $("#MainFooter").height(w / h * 10 + '%');
+                    $("#FooterLogo").show();
+                } else {
                     $("#MainFooter").attr('class', 'FooterFull');
                     $("#MainFooter").height('10%');
+                    $("#FooterLogo").show();
                 }
-            
+
             } else {
                 $("#MainFooter").attr('class', 'FooterMinX');
                 $("#MainFooter").height('10%');
+                $("#FooterLogo").hide();
             }
         }
 
         function OnPostResize() {
             $('.Button').textfill(72);
+            var width = $('#MainFooter').width() - 8;
+            $('.Button').each(function () {
+                width -= $(this).width() + 8;
+            });
+            $("#FooterLogo").width(width);
         }
 
         String.prototype.decode_CER_first_pass = function () {
@@ -303,9 +309,9 @@
             $.ajaxSetup({
                 cache: false
             });
+            UpdateStock();
             OnPreResize();
             OnPostResize();
-            UpdateStock();
         });
 
         var load_complete = 0;
@@ -492,6 +498,7 @@
                 maxFontSize = parseInt(maxFontSize, 10);
                 return this.each(function () {
                     var ourText = $("span", this),
+                        ourIcon = $(".image", this),
                         parent = ourText.parent(),
                         maxHeight = parent.height(),
                         maxWidth = parent.width(),
@@ -504,6 +511,12 @@
                         (maxFontSize > 0 && newSize > maxFontSize) ?
                         maxFontSize :
                         newSize
+                    );
+                    ourIcon.css(
+                        "height",
+                        (maxFontSize > 0 && newSize > maxFontSize) ?
+                        maxFontSize * 0.65 :
+                        newSize * 0.65
                     );
                 });
             };
