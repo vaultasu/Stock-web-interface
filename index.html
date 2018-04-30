@@ -503,8 +503,8 @@
                         maxHeight = parent.height(),
                         maxWidth = parent.width(),
                         fontSize = parseInt(ourText.css("fontSize"), 10),
-                        multiplier = maxWidth / ourText.width() < maxHeight / ourText.height() ?
-                        maxWidth / ourText.width() : maxHeight / ourText.height(),
+                        multiplier = maxWidth / (ourText.width()+ourIcon.width()) < maxHeight / (ourText.height()+ourIcon.height()) ?
+                        maxWidth / (ourText.width()+ourIcon.width()*0.65) : maxHeight / (ourText.height()+ourIcon.height()*0.65),
                         newSize = (fontSize * (multiplier - 0.1));
                     ourText.css(
                         "fontSize",
@@ -512,7 +512,7 @@
                         maxFontSize :
                         newSize
                     );
-                    ourIcon.css(
+                   ourIcon.css(
                         "height",
                         (maxFontSize > 0 && newSize > maxFontSize) ?
                         maxFontSize * 0.65 :
