@@ -127,18 +127,10 @@
     <div id="MainFooter" class='FooterFull'>
 
         <button class='Button' onclick="UpdateStock()">
-            <svg class="image" viewBox='0 0 512 512'>
-                <use xlink:href='icon_load.svg#icon' />
-            </svg>
             <span>Обновить</span>
         </button>
 
-
-
         <button class='Button' onclick="SaveFile()">
-            <svg class="image" viewBox='0 0 18 18'>
-                <use xlink:href='icon_save.svg#icon' />
-            </svg>
             <span>Сохранить</span>
         </button>
 
@@ -496,20 +488,14 @@
                         maxHeight = parent.height(),
                         maxWidth = parent.width(),
                         fontSize = parseInt(ourText.css("fontSize"), 10),
-                        multiplier = maxWidth / (ourText.width()+ ourIcon.width()*0.65) < maxHeight / ourText.height() ?
-                        maxWidth / (ourText.width()+ ourIcon.width()*0.65) : maxHeight / ourText.height(),
+                        multiplier = maxWidth / ourText.width() < maxHeight / ourText.height() ?
+                        maxWidth / ourText.width() : maxHeight / ourText.height(),
                         newSize = (fontSize * (multiplier - 0.1));
                     ourText.css(
                         "fontSize",
                         (maxFontSize > 0 && newSize > maxFontSize) ?
                         maxFontSize :
                         newSize
-                    );
-                    ourIcon.css(
-                        "height",
-                        (maxFontSize > 0 && newSize > maxFontSize) ?
-                        maxFontSize * 0.7 :
-                        newSize * 0.7
                     );
                 });
             };
