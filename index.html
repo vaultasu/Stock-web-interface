@@ -98,12 +98,11 @@
             display: flex;
             flex-direction: row;
             font-family: KTP900RUS;
-            font-size: 72px;
-            color: rgb(0, 65, 231);
+            font-size: 48px;
+            color: rgb(0, 65, 255);
             border: 2px solid rgb(0, 65, 231);
             padding: 5px 5px 5px 5px;
-            background: rgb(200, 243, 243);
-            border-radius: 10px;
+            background: rgb(231, 231, 231);
             align-items: center;
             cursor: pointer;
             height: 100%;
@@ -249,8 +248,8 @@
         }
 
         function OnPostResize() {
-            $('.Button span').css("fontsize", '72px');
-            $('.Button').textfill(72);
+            $('.Button span').css("fontsize", '48px');
+            $('.Button').textfill(144);
             var width = $('#MainFooter').width() - 8;
             $('.Button').each(function () {
                 width -= $(this).width() + 8;
