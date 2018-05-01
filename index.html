@@ -36,6 +36,10 @@
             border: 0px;
             padding: 2px 2px 2px 2px;
             margin: 0;
+            width: 100%;
+            height: 90%;
+            background: rgb(231, 231, 231);
+            overflow: scroll;
         }
 
         .row {
@@ -112,7 +116,7 @@
 
 <body style="display: flex;flex-direction: column">
 
-    <div id="StockView" style="width:100%;height:90%;background: rgb(231, 231,231);overflow: scroll;padding: 0;margin: 0">
+    <div id="StockView">
 
     </div>
 
@@ -130,7 +134,7 @@
 
     </div>
 
-    <svg width="0px" height="0">
+    <svg width="0px" height="0" style="border:1px solid black">
         <symbol id="Box">
             <path fill="#0041ff" d="M443.215,199.258l-64-37.6l64-37.6c3.2-1.6,4-5.2,2.4-8c-0.4-0.8-1.2-1.6-2-2l-72.4-42.4l-72.8-42.8c-2-1.2-4-1.2-6,0
                         l-69.2,40.8l-69.6-40.8c-1.6-1.2-4-1.2-6,0l-72.4,42.8l-72,42.4c-0.8,0.4-1.6,1.2-2,2c-1.6,2.8-0.8,6.4,2,8l64,37.6l-64.4,37.6
@@ -145,7 +149,7 @@
                         l64-37.6l69.6-40.8l61.2,36L365.215,241.658z" />
         </symbol>
 
-        <symbol id='Loading' viewBox="0 0 12362 3013" width="67.7332mm" height="16.51mm">
+        <symbol id='Loading'>
             <defs>
 
                 <style type="text/css">
@@ -296,6 +300,7 @@
         async function parallel() {
             load_complete = 0;
             $("#LoadBar").width(6800 / 20 * load_complete + 'px');
+           
             const task = new Array(20);
             const json = new Array(20);
 
@@ -305,6 +310,7 @@
                     load_complete += 1;
                     $("#LoadBar").width(6800 / 20 * load_complete + 'px');
                     console.log('Task done ' + load_complete.toString() + "%");
+                    console.log( $("#LoadBar").width());
                 });
             }
             for (var i = 0; i < 20; i++) {
@@ -316,8 +322,7 @@
         async function UpdateStock() {
             let startTime = performance.now();
             $('#StockView').html(
-                //'<div style=\'width:100%;height:100%;background: url(image.svg) no-repeat center;background-size: contain;\'><svg viewBox=\'0 0 64 64\' style=\'display:block;width:100%;height:100%;\'><use xlink:href=\'#Loading\'/></svg></div>'
-                '<svg viewBox=\'0 0 12362 3013\' style=\'display:block;width:100%;height:100%;\'><use xlink:href=\'#Loading\'/></svg>'
+                '<svg viewBox=\'0 0 12362 3013\' style=\'display:block;width:100%;height:100%\'><use xlink:href=\'#Loading\'/></svg>'
             );
             json = await parallel();
             console.log(`Load tags finished in ${ Number.parseInt(performance.now() - startTime) } miliseconds with`);
