@@ -99,17 +99,41 @@
             flex-direction: row;
             font-family: KTP900RUS;
             font-size: 48px;
-            color: rgb(231, 231,231);
-            border: 2px solid rgb(231, 231, 231);
-            padding: 5px 5px 5px 5px;
             background: rgb(0, 65, 255);
-            align-items: center;
+            color: rgb(231, 231, 231);
+            align-items: stretch;
             cursor: pointer;
             height: 100%;
             justify-content: center;
-            border-radius: 10px;
         }
 
+        #MainFooter .ButtonEx {
+            padding: 5px 5px 5px 5px;
+            border: 2px solid rgb(231, 231, 231);
+            border-radius: 10px;
+            align-items: center;
+        }
+
+        .Index {
+            box-sizing: border-box;
+            width: calc(100%/3);
+            text-align: center;
+            font-family: KTP900RUS;
+            background: rgb(231, 231, 231);
+            border: 0;
+            margin: 2px 2px 2px 2px;
+            color: rgb(0, 65, 255);
+        }
+
+        input[type=number]::-webkit-outer-spin-button,
+        input[type=number]::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+
+        input[type=number] {
+            -moz-appearance: textfield;
+        }
     </style>
 </head>
 
@@ -121,13 +145,23 @@
 
     <div id="MainFooter" class='FooterFull'>
 
-        <button class='Button' onclick="UpdateStock()">
+        <button class='Button ButtonEx' onclick="UpdateStock()">
             <span>Обновить</span>
         </button>
 
-        <button class='Button' onclick="SaveFile()">
+        <button class='Button ButtonEx' onclick="SaveFile()">
             <span>Сохранить</span>
         </button>
+
+        <button class='Button ButtonEx' onclick="ShowCell()">
+            <span>Показать</span>
+        </button>
+
+        <div class='Button'>
+            <input class="Index" type="number" />
+            <input class="Index" type="number" />
+            <input class="Index" type="number" />
+        </div>
 
         <div id="FooterLogo"></div>
 
@@ -232,25 +266,26 @@
 
                     $("#MainFooter").height(w / h * 10 + '%');
                     $("#FooterLogo").show();
-                    $('.Button').width($("#MainFooter").width() / 3);
+                    $('.Button').width($("#MainFooter").width() / 5);
                 } else {
 
                     $("#MainFooter").height('10%');
                     $("#FooterLogo").show();
-                    $('.Button').width($("#MainFooter").width() / 3);
+                    $('.Button').width($("#MainFooter").width() / 5);
                 }
 
             } else {
 
                 $("#MainFooter").height('10%');
                 $("#FooterLogo").hide();
-                $('.Button').width($("#MainFooter").width() / 2);
+                $('.Button').width($("#MainFooter").width() / 4);
             }
         }
 
         function OnPostResize() {
             $('.Button span').css("fontsize", '48px');
-            $('.Button').textfill(96);
+            $('button.Button').textfill(96);
+            $('div.Button').inputfill(96);
             var width = $('#MainFooter').width() - 8;
             $('.Button').each(function () {
                 width -= $(this).width() + 8;
@@ -284,6 +319,10 @@
         }
 
         var json;
+
+        function ShowCell() {
+            document.getElementById('StockView').scrollTop = 300;
+        }
 
         $(document).ready(function () {
             $.ajaxSetup({
@@ -478,7 +517,6 @@
                 maxFontSize = parseInt(maxFontSize, 10);
                 return this.each(function () {
                     var ourText = $("span", this),
-                        ourIcon = $(".image", this),
                         parent = ourText.parent(),
                         maxHeight = parent.height(),
                         maxWidth = parent.width(),
@@ -486,6 +524,25 @@
                         multiplier = maxWidth / ourText.width() < maxHeight / ourText.height() ?
                         maxWidth / ourText.width() : maxHeight / ourText.height(),
                         newSize = (fontSize * (multiplier - 0.1));
+                    ourText.css(
+                        "fontSize",
+                        (maxFontSize > 0 && newSize > maxFontSize) ?
+                        maxFontSize :
+                        newSize
+                    );
+                });
+            };
+        })(jQuery);
+
+        (function ($) {
+            $.fn.inputfill = function (maxFontSize) {
+                maxFontSize = parseInt(maxFontSize, 10);
+                return this.each(function () {
+                    var ourText = $("input", this),
+                        parent = ourText.parent(),
+                        maxHeight = parent.height(),
+                        maxWidth = parent.width(),
+                        newSize = maxHeight<ourText.width()?maxHeight:ourText.width();
                     ourText.css(
                         "fontSize",
                         (maxFontSize > 0 && newSize > maxFontSize) ?
