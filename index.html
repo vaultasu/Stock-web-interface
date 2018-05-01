@@ -33,22 +33,27 @@
         #StockView {
             font-size: 24px;
             border: 0px;
+            padding: 2px 2px 2px 2px;
+            margin: 0;
         }
 
         .row {
+            box-sizing: border-box;
             display: flex;
-            padding: 0;
-            margin-top: 2px;
-            margin-bottom: 8px;
+            padding: 2px 0px 2px 0px;
+            margin: 0;
         }
 
         .cell {
+            box-sizing: border-box;
             background: rgb(231, 231, 231);
             color: rgb(0, 65, 255);
             border: 2px solid rgb(0, 65, 255);
             white-space: nowrap;
-            padding-left: 2px;
+            padding: 4px 4px 4px 4px;
             margin: 0px 2px 0px 2px;
+            display: flex;
+            flex-direction: column;
         }
 
         .row .cell {
@@ -63,14 +68,6 @@
             font-weight: bold;
             font-size: 26px;
         }
-
-        div.wrapper {
-            display: flex;
-            flex-direction: column;
-            height: 100%;
-            margin: 0;
-        }
-
 
         #MainFooter {
             box-sizing: border-box;
@@ -109,9 +106,6 @@
             border: 2px solid rgb(231, 231, 231);
             border-radius: 10px;
         }
-
-    
-
     </style>
 </head>
 
@@ -331,11 +325,11 @@
             var xmax = 0;
             var ymax = 0;
             $('#StockView').html(
-                '<div id=\'MeasureCell\' class=\'cell\' style=\'display: inline-block;overflow: hidden;padding: 2px;\'></div>'
+                '<div id=\'MeasureCell\' class=\'cell\' style=\'display: inline-block;overflow: hidden;\'></div>'
             );
             var msr = document.getElementById('MeasureCell');
             for (var k = 0; k < 2; k++) {
-                for (var i = 0; i < 10; i++) {
+                for (var i = 0; i <10; i++) {
                     var tr = document.createElement('div');
                     for (var j = 0; j < 10; j++) {
                         var td = document.createElement('div');
@@ -389,14 +383,13 @@
                 var $cells = $(this).find('.cell');
                 $cells.each(function () {
                     if ($(this).text() == 'empty') {
-                        $(this).html("<div class='wrapper'>" + "<div class=\"CellHead\">" + $(this).attr(
+                        $(this).html("<div class=\"CellHead\">" + $(this).attr(
                                 'index') +
-                            "</div><svg viewBox='0 0 447 447' display='block'><use xlink:href=\"#Box\"/></svg></div>"
+                            "</div><svg viewBox='0 0 447 447' display='block'><use xlink:href=\"#Box\"/></svg>"
                         );
                     }
                 });
             });
-
             console.log(`Proccessing finished in ${ Number.parseInt(performance.now() - startTime) } miliseconds with`);
         }
 
@@ -496,7 +489,6 @@
                 });
             };
         })(jQuery);
-
     </script>
 </body>
 
