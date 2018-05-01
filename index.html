@@ -63,10 +63,12 @@
             table-layout: fixed;
         }
 
-        div.CellHead {
+        .cell_header {
             text-align: center;
             font-weight: bold;
-            font-size: 26px;
+            font-size: 30px;
+            padding: 0;
+            margin: 0;
         }
 
         #MainFooter {
@@ -79,9 +81,6 @@
             border: 2px solid rgb(231, 231, 231);
             background: rgb(0, 65, 255);
         }
-
-
-
 
         #FooterLogo {
             background: rgb(0, 65, 255) url(image.svg) no-repeat center right;
@@ -105,7 +104,7 @@
             padding: 5px 5px 5px 5px;
             border: 2px solid rgb(231, 231, 231);
             border-radius: 10px;
-            outline:none;
+            outline: none;
         }
     </style>
 </head>
@@ -330,7 +329,7 @@
             );
             var msr = document.getElementById('MeasureCell');
             for (var k = 0; k < 2; k++) {
-                for (var i = 0; i <10; i++) {
+                for (var i = 0; i < 10; i++) {
                     var tr = document.createElement('div');
                     for (var j = 0; j < 10; j++) {
                         var td = document.createElement('div');
@@ -339,7 +338,7 @@
                         var value = "";
                         var item = json[k * 10 + i].items[j];
                         if (item.Busy == 1) {
-                            value = "<div class=\"CellHead\">" + k.toString() + " - " + i.toString() + " - " + j.toString() +
+                            value = "<div class=\"cell_header\">" + k.toString() + " - " + i.toString() + " - " + j.toString() +
                                 "</div>";
                             value += "Дата поставки: " + item.Date.decode_CER() + "<br>";
                             value += "Тип двигателя: " + item.EngineType.decode_CER() + "<br>";
@@ -384,7 +383,7 @@
                 var $cells = $(this).find('.cell');
                 $cells.each(function () {
                     if ($(this).text() == 'empty') {
-                        $(this).html("<div class=\"CellHead\">" + $(this).attr(
+                        $(this).html("<div class=\"cell_header\">" + $(this).attr(
                                 'index') +
                             "</div><svg viewBox='0 0 447 447' display='block'><use xlink:href=\"#Box\"/></svg>"
                         );
@@ -437,7 +436,7 @@
                     for (var j = 0; j < 10; j++) {
                         ws_data[k * 100 + i * 10 + j + 1] = [];
                         var cell = ws_data[k * 100 + i * 10 + j + 1];
-                        var item = json[i].items[j];
+                        var item = json[k * 10 + i].items[j];
                         cell[0] = k.toString() + " - " + i.toString() + " - " + j.toString();
                         if (item.Busy == 1) {
                             cell[1] = 'Занята';
