@@ -37,7 +37,6 @@
             padding: 2px 2px 2px 2px;
             margin: 0;
             width: 100%;
-            height: 90%;
             background: rgb(231, 231, 231);
             overflow: scroll;
         }
@@ -166,11 +165,13 @@
                 if (w / 2 > h) {
 
                     $("#MainFooter").height(w / h * 10 + '%');
+                    $("#StockView").height(100-w / h * 10 + '%');
                     $("#FooterLogo").show();
                     $('.Button').width($("#MainFooter").width() / 3);
                 } else {
 
                     $("#MainFooter").height('10%');
+                    $("#StockView").height('90%');
                     $("#FooterLogo").show();
                     $('.Button').width($("#MainFooter").width() / 3);
                 }
@@ -178,6 +179,7 @@
             } else {
 
                 $("#MainFooter").height('10%');
+                $("#StockView").height('90%');
                 $("#FooterLogo").hide();
                 $('.Button').width($("#MainFooter").width() / 2);
             }
