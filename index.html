@@ -6,8 +6,8 @@
     <link rel="shortcut icon" href="icon_logo.svg">
     <meta charset="utf-8">
     <script src="jquery-3.3.1.min.js"></script>
-    <script src="xlsx.core.min.js"></script>
     <script src="download.js"></script>
+    <script src="pako.min.js"></script>
     <style>
         @font-face {
             font-family: KTP900RUS;
@@ -115,7 +115,7 @@
 
 <body style="display: flex;flex-direction: column">
 
-        <div id="StockView"></div>
+    <div id="StockView"></div>
 
     <div id="MainFooter" class='FooterFull'>
 
@@ -146,9 +146,12 @@
                         l64-37.6l69.6-40.8l61.2,36L365.215,241.658z" />
         </symbol>
         <symbol id="Loading">
-            <rect fill="rgb(231,231,231)" stroke="rgb(231,231,231)" stroke-width="30" x="1397px" y="2247px" width="6950px" height="300px" />
-            <rect fill="rgb(0,65,255)" stroke="rgb(231,231,231)" stroke-width="30" x="1350px" y="2200px" width="6950px" height="300px" />
-            <rect id="LoadBar" fill="rgb(231,231,231)" stroke="rgb(231,231,231)" stroke-width="30" x="1425px" y="2275px" width="0px" height="150px" />
+            <rect fill="rgb(231,231,231)" stroke="rgb(231,231,231)" stroke-width="30" x="1397px" y="2247px" width="6950px" height="300px"
+            />
+            <rect fill="rgb(0,65,255)" stroke="rgb(231,231,231)" stroke-width="30" x="1350px" y="2200px" width="6950px" height="300px"
+            />
+            <rect id="LoadBar" fill="rgb(231,231,231)" stroke="rgb(231,231,231)" stroke-width="30" x="1425px" y="2275px" width="0px"
+                height="150px" />
         </symbol>
     </svg>
 
@@ -163,7 +166,7 @@
                 if (w / 2 > h) {
 
                     $("#MainFooter").height(w / h * 10 + '%');
-                    $("#StockView").height(100-w / h * 10 + '%');
+                    $("#StockView").height(100 - w / h * 10 + '%');
                     $("#FooterLogo").show();
                     $('.Button').width($("#MainFooter").width() / 3);
                 } else {
@@ -404,7 +407,58 @@
 
         }
 
-        function SaveFile() {
+        var sheets_connected = false;
+
+        async function connect_sheetjs() {
+
+            /* $.get("xlsx.core.min.js", function (json) {
+                 var binaryString = pako.deflate(json, { to: 'string' });
+              download(new Blob([s2ab(binaryString)]), 'test.gz', 'pplication/octet-stream');
+               console.log(json);
+              });*/
+alert();
+            const get_from_blob = function (blob) {
+                return new Promise(function (resolve, reject) {
+                    const reader = new FileReader();
+                    reader.onload = function (event) {
+                        resolve(reader.result);
+                    };
+                    reader.readAsArrayBuffer(blob);
+                });
+            };
+
+            const get_blob = function (data) {
+                return new Promise(async function (resolve, reject) {
+                    const oReq = new XMLHttpRequest();
+                    oReq.open("GET", "test.gz", true);
+                    oReq.responseType = "blob";
+                    oReq.onload = function (event) {
+                        const blob = oReq.response;
+                        resolve(blob);
+                    };
+                    oReq.send();
+                });
+            };
+
+
+            var blob = await get_blob();
+            var data = await get_from_blob(blob);
+            const result = pako.inflate(data, {
+                to: 'string'
+            });
+
+            var js = document.createElement('script');
+            js.innerHTML = result;
+            js.setAttribute("id", "SheetJS");
+            document.body.appendChild(js);
+
+        }
+
+        async function SaveFile() {
+            const el = document.getElementById('SheetJS');
+            if (el == null) {
+                await connect_sheetjs();
+            }
             save_xsls();
         }
 
