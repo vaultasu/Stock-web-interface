@@ -260,7 +260,7 @@
             );
             json = await parallel();
             console.log(`Load tags finished in ${ Number.parseInt(performance.now() - startTime) } miliseconds with`);
-            /*startTime = performance.now();
+            startTime = performance.now();
             var tbl = document.createElement('div');
             var xmax = 0;
             var ymax = 0;
@@ -330,7 +330,7 @@
                     }
                 });
             });
-            console.log(`Proccessing finished in ${ Number.parseInt(performance.now() - startTime) } miliseconds with`);*/
+            console.log(`Proccessing finished in ${ Number.parseInt(performance.now() - startTime) } miliseconds with`);
         }
 
         function s2ab(s) {
