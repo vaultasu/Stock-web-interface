@@ -83,7 +83,7 @@
             display: flex;
             flex-direction: row;
             overflow: hidden;
-            border: 2px solid rgb(231, 0, 0);
+            border: 2px solid rgb(231, 231, 231);
             background: rgb(0, 65, 255);
             width: 100%;
         }
@@ -133,9 +133,9 @@
 
     </div>
 
-    <svg width="0px" height="0">
-        <symbol id="Box">
-            <path fill="#0041ff" d="M443.215,199.258l-64-37.6l64-37.6c3.2-1.6,4-5.2,2.4-8c-0.4-0.8-1.2-1.6-2-2l-72.4-42.4l-72.8-42.8c-2-1.2-4-1.2-6,0
+        <svg style='display: none;'>
+            <symbol id="Box">
+                <path fill="#0041ff" d="M443.215,199.258l-64-37.6l64-37.6c3.2-1.6,4-5.2,2.4-8c-0.4-0.8-1.2-1.6-2-2l-72.4-42.4l-72.8-42.8c-2-1.2-4-1.2-6,0
                         l-69.2,40.8l-69.6-40.8c-1.6-1.2-4-1.2-6,0l-72.4,42.8l-72,42.4c-0.8,0.4-1.6,1.2-2,2c-1.6,2.8-0.8,6.4,2,8l64,37.6l-64.4,37.6
                         c-2.8,1.6-3.6,5.2-2,8c0.4,0.8,1.2,1.6,2,2l69.6,40.8v79.2c0,2,1.2,4,2.8,4.8l144,83.2c0.4,0,0.4,0.4,0.8,0.4c0,0,0.4,0,0.4,0.4
                         c0.8,0.4,1.2,0.4,2,0.4s1.2,0,2-0.4c0,0,0.4,0,0.4-0.4c0.4,0,0.4,0,0.8-0.4l143.6-83.2c2-1.2,2.8-3.2,2.8-4.8v-78.4l71.2-41.6
@@ -146,16 +146,17 @@
                         l-132.4-76.8v-69.2l63.6,37.6c2,1.2,4,1.2,6,0l62.8-36.8V402.858z M223.215,240.058l-37.6-22l37.6-22l37.6,22L223.215,240.058z
                          M360.816,326.058l-132.4,76.8v-146.8l64.4,38c1.6,1.2,4,1.2,6,0l62-36.4V326.058z M365.215,241.658l-2,1.2l-67.6,39.6l-61.2-36
                         l64-37.6l69.6-40.8l61.2,36L365.215,241.658z" />
-        </symbol>
-        <symbol id="Loading">
-            <rect fill="rgb(231,231,231)" stroke="rgb(231,231,231)" stroke-width="30" x="1397px" y="2247px" width="6950px" height="300px"
-            />
-            <rect fill="rgb(0,65,255)" stroke="rgb(231,231,231)" stroke-width="30" x="1350px" y="2200px" width="6950px" height="300px"
-            />
-            <rect id="LoadBar" fill="rgb(231,231,231)" stroke="rgb(231,231,231)" stroke-width="30" x="1425px" y="2275px" width="0px"
-                height="150px" />
-        </symbol>
-    </svg>
+            </symbol>
+            <symbol id="Loading">
+                <rect fill="rgb(231,231,231)" stroke="rgb(231,231,231)" stroke-width="30" x="1397px" y="2247px" width="6950px" height="300px"
+                />
+                <rect fill="rgb(0,65,255)" stroke="rgb(231,231,231)" stroke-width="30" x="1350px" y="2200px" width="6950px" height="300px"
+                />
+                <rect id="LoadBar" fill="rgb(231,231,231)" stroke="rgb(231,231,231)" stroke-width="30" x="1425px" y="2275px" width="0px"
+                    height="150px" />
+            </symbol>
+        </svg>
+ 
 
     <script type='text/javascript'>
         window.addEventListener('resize', OnPreResize, true);
