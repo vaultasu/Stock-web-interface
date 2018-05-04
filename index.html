@@ -6,7 +6,7 @@
     <link rel="shortcut icon" href="icon_logo.svg">
     <meta charset="utf-8">
     <script src="jquery-3.3.1.min.js"></script>
-    <script src="download.js"></script>
+    <script src="FileSaver.min.js"></script>
     <script src="pako.min.js"></script>
     <style>
         @font-face {
@@ -403,7 +403,10 @@
                 type: 'binary'
             });
 
-            download(new Blob([s2ab(wbout)]), 'test.xlsx', 'application/octet-stream');
+            var blob = new Blob([s2ab(wbout)], {
+                type: "application/octet-stream"
+            });
+            saveAs(blob, "test.xlsx");
 
         }
 
@@ -429,7 +432,7 @@
             const get_blob = function (data) {
                 return new Promise(async function (resolve, reject) {
                     const oReq = new XMLHttpRequest();
-                    oReq.open("GET", "test.gz", true);
+                    oReq.open("GET", "xlsx.core.min.gz", true);
                     oReq.responseType = "blob";
                     oReq.onload = function (event) {
                         const blob = oReq.response;
