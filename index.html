@@ -45,7 +45,7 @@
         .row {
             box-sizing: border-box;
             display: flex;
-            padding: 2px 0px 2px 0px;
+            padding: 3px 0px 3px 0px;
             margin: 0;
         }
 
@@ -56,7 +56,7 @@
             border: 2px solid rgb(0, 65, 255);
             white-space: nowrap;
             padding: 4px 4px 4px 4px;
-            margin: 0px 2px 0px 2px;
+            margin: 0px 3px 0px 3px;
             display: flex;
             flex-direction: column;
         }
@@ -66,6 +66,7 @@
             height: 100%;
             overflow: hidden;
             table-layout: fixed;
+            box-shadow: 3px 3px rgb(0, 65, 255);
         }
 
         .cell_header {
@@ -111,7 +112,9 @@
             border: 2px solid rgb(231, 231, 231);
             border-radius: 10px;
             outline: none;
+            box-shadow: 3px 3px rgb(231, 231, 231);
         }
+        
     </style>
 </head>
 
@@ -298,8 +301,8 @@
                     tbl.appendChild(tr);
                 }
             }
-            xmax += 8;
-            ymax += 8;
+            xmax += 12;
+            ymax += 12;
             $("#StockView").html(tbl.innerHTML);
 
 
@@ -309,7 +312,7 @@
 
             xmax *= 10;
             width = xmax < width ? width : xmax;
-            height = ymax * 20 < height ? height / 20 - 8 : ymax - 8;
+            height = ymax * 20 < height ? height / 20 - 12 : ymax - 12;
 
             $rows.each(function () {
                 $(this).attr('class', 'row');
