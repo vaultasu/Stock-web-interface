@@ -142,6 +142,11 @@
             <rect id="LoadBar" fill="rgb(231,231,231)" stroke="rgb(231,231,231)" stroke-width="30" x="1425px" y="2275px" width="0px"
                 height="150px" />
         </symbol>
+        <symbol id="Alert">
+                <text x="1000" y="250" font-family="KTP900RUS" font-size="172" text-anchor="middle" fill="rgb(231,231,231)">Не включен режим передачи</text>
+                <rect x="700" y="335" width="600" height="600" fill="rgb(255,65,0)" stroke-width="8" stroke="rgb(231,231,231)"/>
+                <text x="1000" y="830" font-family="KTP900RUS" font-size="600" text-anchor="middle" fill="rgb(231,231,231)" stroke-width="32" stroke="rgb(231,231,231)">!</text>
+        </symbol>
     </svg>
 
     <div id="StockView"></div>
@@ -259,7 +264,7 @@
             access = await $.getJSON("access.htm", function () {});
             if (!access.Value) {
                 $('#StockView').html(
-                    '<svg viewBox=\'0 0 2000 1000\' style=\'display:block;width:100%;height:100%;background: rgb(255, 65,0) url(alert.svg) no-repeat center;background-size: contain;\'></svg>'
+                    '<svg viewBox=\'0 0 2000 1000\' style=\'display:block;width:100%;height:100%;background: rgb(0, 65,255);\'><use xlink:href=\'#Alert\'/></svg>'
                 );
                 return;
             }
